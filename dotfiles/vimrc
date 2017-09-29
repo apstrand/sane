@@ -1,0 +1,110 @@
+
+set nocompatible
+set backspace=2
+set noerrorbells
+" set equalprg=""
+set hidden
+set icon
+set incsearch
+set laststatus=2
+set modeline
+set path=.,..,../src,/usr/include,/usr/local/include,/usr/X11R6/include
+set ruler
+set scrolloff=4
+set showcmd
+set showmatch
+set suffixes=\.bak,\.swp,\.dvi,\.ps,\.log,\.aux,\.o,\.obj,\~,\.hi,\.ali,\.class
+set wildignore=*.bak,*.swp,*.dvi,*.ps,*.log,*.aux,*.o,*.obj,*~,*.hi,*.ali,*.class
+set viminfo='20,\"50
+set history=100
+set virtualedit=block
+set winheight=12
+set whichwrap=<,>,[,],b,s
+set nowrap
+set autoindent
+set smartindent
+set notitle
+" set cindent
+" set autowrite
+set hlsearch
+
+set wildmenu
+set wildmode=longest:full
+
+set complete=.,w,b,u,i,t
+
+set tabstop=8
+set shiftwidth=2
+set expandtab
+"set softtabstop=2
+set smarttab
+
+" set guifont=-adobe-courier-medium-r-normal-*-*-100-*-*-*-*-iso8859-1
+" set guifont=-misc-fixed-medium-r-normal--15-140-75-75-c-90-iso10646-1
+" set guifont=-b&h-lucidatypewriter-medium-r-normal-*-*-100-*-*-m-*-iso8859-1
+" set guifontwide=-misc-fixed-medium-r-normal--15-140-75-75-c-90-iso10646-1
+
+
+set makeprg=cat\ make.log
+
+
+
+map   <F1>  :bprevious!<cr>
+map   <F2>  :bnext!<cr>
+map   <F3>  :w<cr>
+map             <S-F3>  :exe "mksession! " . v:this_session<CR>
+map   <F4>  :bd<cr>
+map   <F7>  :wa<bar>make<cr>
+map   <S-F8>  :cp<cr>
+map   <F8>  :cn<cr>
+
+imap  <F1>  <esc><F1>a
+imap  <F2>  <esc><F2>a
+imap  <F3>  <esc><F3>a
+imap  <F4>  <esc><F4>a
+
+map   <C-TAB> :b #<cr>
+
+map ,E  :e! $VIM/vimrc<cr>
+map ,V  :so $VIM/vimrc<cr>
+
+
+map <C-D> <delete>
+noremap Y y$
+noremap <C-G> 2<C-G>
+noremap <cr>  :noh<cr><cr>
+
+map     ,ci     mc0w"py/{<cr>/{<cr>"Py%d%gea;<esc>lD?^class<cr>w"cyw'c
+map     ,pi     o<esc>"pp=][w"cPa::<esc>][o<esc>
+
+
+
+
+imap  <C-F12> <esc>:exe Switchfile()<cr>
+map   <C-F12> :exe Switchfile()<cr>
+
+function! Switchfile()
+  if expand("%:e") == "cpp"
+    exe "edit " . expand("%:r") . ".h"
+  else
+    exe "edit " . expand("%:r") . ".cpp"
+  endif
+endfunction
+
+command! -nargs=1 -complete=tag S grep <args> `find . -type f -not -name '*.diff' -not -name '*.orig' -not -name '*.rej' -not -name '.\#*' -not -name tags -not -path CVS`
+
+
+hi Folded guibg=black guifg=grey
+hi FoldColumn guibg=#404040 guifg=grey
+set foldignore=#-{}
+
+" highlight ExtraWhitespace ctermbg=red guibg=red
+" match ExtraWhitespace /\s\+$/
+
+autocmd BufRead,BufNewFile *.go set filetype=go
+autocmd Filetype go setlocal ts=2 noexpandtab
+
+execute pathogen#infect()
+
+let g:go_fmt_command = "goimports"
+
